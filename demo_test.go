@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -75,11 +76,27 @@ func TestDemoScriptLeavesNoPartialWrites(t *testing.T) {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, "bash", "scripts/demo-agents.sh", dir)
-	cmd.WaitDelay = time.Second
+	// Cancellation sends the signal the script installs a trap for. The
+	// default is SIGKILL, which no process can respond to, so a workspace
+	// asked to be clean after one is asked for something no program can
+	// promise. WaitDelay still escalates to a kill if the trap does not finish.
+	cmd.Cancel = func() error { return cmd.Process.Signal(syscall.SIGTERM) }
+	cmd.WaitDelay = 5 * time.Second
 	if err := cmd.Start(); err != nil {
 		t.Fatalf("start the demo: %v", err)
 	}
 	waitForDocuments(t, dir, 5)
+
+	// A signal that arrives between the write and the rename leaves a
+	// temporary file, and that window is too small to land on deliberately.
+	// Planting one puts the workspace in the state an interruption produces,
+	// so the trap answers the same question without a race deciding whether it
+	// was asked.
+	planted := filepath.Join(dir, "agent-researcher", ".agentfs-demo.interrupted")
+	if err := os.WriteFile(planted, []byte("{"), 0o600); err != nil {
+		t.Fatalf("plant an interrupted write: %v", err)
+	}
+
 	cancel()
 	_ = cmd.Wait()
 
