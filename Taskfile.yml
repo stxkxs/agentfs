@@ -147,7 +147,7 @@ tasks:
     desc: Report known vulnerabilities reachable from this module.
     preconditions:
       - sh: command -v govulncheck
-        msg: govulncheck is required; install it with "go install golang.org/x/vuln/cmd/govulncheck@latest"
+        msg: govulncheck is required; install it with "go install golang.org/x/vuln/cmd/govulncheck@v1.7.0"
     cmds:
       - govulncheck ./...
 
