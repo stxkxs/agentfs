@@ -51,7 +51,7 @@ var platforms = []platform{
 			"descriptor limit rather than a per-user watch limit.",
 	},
 	{
-		name: "darwin/amd64", runner: "macos-13",
+		name: "darwin/amd64", runner: "macos-15-intel",
 		builds: true, tests: true, race: true, confinement: true,
 		note: "The same kernel interfaces as darwin/arm64.",
 	},
