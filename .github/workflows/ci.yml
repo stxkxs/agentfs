@@ -145,8 +145,11 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
+      # Pinned rather than @latest: the scanner decides what counts as a
+      # finding, so an unpinned one makes the job report a different thing on
+      # a day nobody changed anything, and fetches an unreviewed build to do it.
       - name: Install govulncheck
-        run: go install golang.org/x/vuln/cmd/govulncheck@latest
+        run: go install golang.org/x/vuln/cmd/govulncheck@v1.7.0
       - name: Report known vulnerabilities
         run: govulncheck ./...
 

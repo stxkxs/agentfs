@@ -14,10 +14,20 @@ how that is arranged.
 | Go | everything | 1.26 or later, matching the `go` directive in `go.mod` |
 | [Task](https://taskfile.dev) | every phase below | 3.x |
 | [golangci-lint](https://golangci-lint.run) | `task lint`, `task fmt` | v2.13.1, the version the gate runs |
-| [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck) | `task vuln` | `go install golang.org/x/vuln/cmd/govulncheck@latest` |
+| [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck) | `task vuln` | v1.7.0, the version the gate runs |
 
 `task --list` prints every task with what it does. Nothing in the repository needs a dependency
 outside `go.mod`; do not add one.
+
+Both tool versions are pinned twice — the workflow installs them and the Taskfile checks a
+contributor's binary against them — so a local gate and a pipeline gate ask the same release the same
+question. `TestEveryPinnedToolCarriesOneVersion` refuses a tree where the two have parted company, or
+where either is pinned to `latest`.
+
+Updates to `go.mod`, to the pinned tools and to the workflow's actions arrive as pull requests from
+Renovate, configured in [`renovate.json`](renovate.json). A fix for a published vulnerability is
+raised as soon as it exists; everything else waits for the release to settle. Actions are merged by
+the run that carries them; a Go dependency, a toolchain bump and the two scanners are read first.
 
 ---
 

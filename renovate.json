@@ -1,0 +1,144 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommitsDisabled",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "timezone": "UTC",
+  "schedule": [
+    "before 6am on monday"
+  ],
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 2,
+  "labels": [
+    "dependencies"
+  ],
+  "commitMessagePrefix": "build:",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newValue}}",
+  "postUpdateOptions": [
+    "gomodTidy"
+  ],
+  "configMigration": true,
+  "dependencyDashboard": true,
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": [
+      "at any time"
+    ],
+    "labels": [
+      "dependencies",
+      "security"
+    ],
+    "minimumReleaseAge": null
+  },
+  "packageRules": [
+    {
+      "description": "A release is left to settle before it is proposed, so a version withdrawn within days of publication is never the one this tree is bumped to. A vulnerability fix overrides this, above.",
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "minimumReleaseAge": "5 days"
+    },
+    {
+      "description": "The interface is drawn by these three together and they release in step, so proposing them separately produces a tree that has never been built as a whole.",
+      "groupName": "charm terminal libraries",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "charm.land/**",
+        "github.com/charmbracelet/**"
+      ]
+    },
+    {
+      "description": "Actions are pinned to a digest and read only by the pipeline, so a bump is verified by the run that carries it.",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "github actions",
+      "automerge": true,
+      "automergeType": "pr",
+      "matchUpdateTypes": [
+        "digest",
+        "pin",
+        "patch",
+        "minor"
+      ]
+    },
+    {
+      "description": "golangci-lint is named in the workflow and in the Taskfile, and TestEveryPinnedToolCarriesOneVersion refuses a tree where the two disagree. Both are updated as one pull request so the gate is never asked to pass on half an update.",
+      "groupName": "golangci-lint",
+      "matchDepNames": [
+        "golangci/golangci-lint-action",
+        "golangci/golangci-lint"
+      ]
+    },
+    {
+      "description": "govulncheck decides what the vulnerability job reports, so its own update is read rather than merged unseen.",
+      "groupName": "govulncheck",
+      "matchDepNames": [
+        "golang.org/x/vuln"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "The toolchain a build requires is a compatibility claim the platform reference makes, so it is raised deliberately.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchDepTypes": [
+        "golang"
+      ],
+      "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "The golangci-lint release the workflow tells the action to run. The github-actions manager reads the uses line and not the version beneath it, so without this the action's pin and the Taskfile's would part company.",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/ci\\.yml$/"
+      ],
+      "matchStrings": [
+        "golangci-lint-action@[0-9a-f]+[^\\n]*\\n\\s*with:\\n\\s*version:\\s*(?<currentValue>v\\S+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    },
+    {
+      "description": "The golangci-lint version the Taskfile checks a contributor's binary against.",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^Taskfile\\.yml$/"
+      ],
+      "matchStrings": [
+        "LINT_VERSION:\\s*(?<currentValue>v\\S+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    },
+    {
+      "description": "The govulncheck version the workflow installs and the Taskfile names.",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/ci\\.yml$/",
+        "/^Taskfile\\.yml$/"
+      ],
+      "matchStrings": [
+        "golang\\.org/x/vuln/cmd/govulncheck@(?<currentValue>v\\S+?)[\"\\s]"
+      ],
+      "depNameTemplate": "golang.org/x/vuln",
+      "datasourceTemplate": "go"
+    }
+  ]
+}
