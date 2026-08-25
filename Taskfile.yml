@@ -84,9 +84,23 @@ tasks:
 
   lint:
     desc: Run golangci-lint over every package.
+    vars:
+      # The pipeline pins this version. A linter reports what its own release
+      # decided to report, so a local run against a different one answers a
+      # different question and a clean tree still fails review. The precondition
+      # holds them together rather than leaving the difference to be discovered
+      # in a pull request.
+      LINT_VERSION: v2.13.1
     preconditions:
       - sh: command -v golangci-lint
         msg: golangci-lint is required; see https://golangci-lint.run for install steps
+      - sh: |
+          have=$(golangci-lint version --short 2>/dev/null || golangci-lint version 2>&1 | sed -n 's/.*version \([0-9][^ ]*\).*/\1/p')
+          [ "v${have#v}" = "{{.LINT_VERSION}}" ]
+        msg: |
+          golangci-lint {{.LINT_VERSION}} is required; the pipeline pins it and another
+          release reports a different set. Install it with:
+            go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{.LINT_VERSION}}
     cmds:
       - golangci-lint run ./...
 

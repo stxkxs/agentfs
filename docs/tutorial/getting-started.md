@@ -129,7 +129,7 @@ independent, so "finished, having recovered from a fault" is something an agent 
 
 ```
 workspace     /tmp/ws
-filesystem    apfs (local)
+filesystem    <the filesystem under the root>
 detection     notify
 confinement   os.Root — a path that resolves outside the workspace is refused
 agents        2

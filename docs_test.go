@@ -371,6 +371,11 @@ func TestNoTestHidesOutsideTheBuildGraph(t *testing.T) {
 // It covers the commands whose output is a function of the workspace alone. A
 // transcript of the terminal interface is a frame, and the goldens under
 // internal/ui/app cover those.
+// filesystemLine matches the line of `agentfs doctor` that names the filesystem
+// under the root, whose value is a property of the machine the command runs on.
+// The label is held; the value is not.
+var filesystemLine = regexp.MustCompile(`^(filesystem\s+).+$`)
+
 func TestTutorialTranscriptsMatchTheCommands(t *testing.T) {
 	t.Parallel()
 
@@ -410,8 +415,11 @@ func TestTutorialTranscriptsMatchTheCommands(t *testing.T) {
 	tutorial := read(t, "docs/tutorial/getting-started.md")
 
 	// Each case names a command and a line the tutorial prints for it. The
-	// workspace path differs, so the comparison is per line with the path
-	// substituted out.
+	// comparison is per line, with the values that name the machine rather than
+	// the program substituted out: the workspace path, and the filesystem
+	// `agentfs doctor` finds under the root. A transcript stating one machine's
+	// filesystem would be a measurement rather than documentation — true where
+	// it was captured and false everywhere else.
 	cases := []struct {
 		name string
 		args []string
@@ -431,6 +439,7 @@ func TestTutorialTranscriptsMatchTheCommands(t *testing.T) {
 			}
 			for _, line := range strings.Split(strings.TrimRight(string(out), "\n"), "\n") {
 				line = strings.TrimRight(strings.ReplaceAll(line, ws, "/tmp/ws"), " ")
+				line = filesystemLine.ReplaceAllString(line, "${1}<the filesystem under the root>")
 				if line == "" {
 					continue
 				}

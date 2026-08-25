@@ -10,6 +10,14 @@ linters:
   # import net/http or database/sql, and noctx also covers os/exec, which the
   # tests use to drive the built binary — so bodyclose, noctx and rowserrcheck
   # are enforced over the surface the deny list leaves reachable.
+  # goconst is not enabled. It reports a literal repeated three times as a
+  # constant waiting to be named, which inverts how this repository is built:
+  # the declaration tables are the source of truth and their cells are the
+  # declaration. `wire` in internal/agentstate/status.go spells each status
+  # beside the constant it names, three format lexers each spell their own
+  # keywords, a palette names a colour once per role, and a settings table
+  # names the command each row applies to. Naming those cells moves the answer
+  # away from the table a reader came to read.
   enable:
     - bodyclose
     - depguard
@@ -23,7 +31,6 @@ linters:
     - forbidigo
     - gocritic
     - gocyclo
-    - goconst
     - gosec
     - govet
     - ineffassign
