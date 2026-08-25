@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS1003"
+  ],
+  "pointers": [
+    "/co·st·_usd"
+  ],
+  "status": "running",
+  "extra": [
+    "co\u200dst\ufe0f_usd"
+  ],
+  "notes": "A zero-width joiner and a variation selector in a member name are each replaced by a visible marker in the pointer the diagnostic names."
+}

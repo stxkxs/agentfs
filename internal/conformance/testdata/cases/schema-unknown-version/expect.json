@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS1005"
+  ],
+  "pointers": [
+    "/schema"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1005=agentfs/v2"
+  ],
+  "notes": "A contract version this build does not implement is refused rather than read as v1."
+}

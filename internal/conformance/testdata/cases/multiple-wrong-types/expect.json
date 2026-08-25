@@ -1,0 +1,17 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/agent",
+    "/model",
+    "/task"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=1",
+    "AFS2001=2",
+    "AFS2001=[]"
+  ],
+  "notes": "Decoding continues past a type error, so one pass reports every mistyped member."
+}

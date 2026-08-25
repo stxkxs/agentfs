@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stxkxs.github.io/agentfs/schema/report.v1.json",
+  "title": "agentfs one-shot result",
+  "description": "The object every agentfs command emits under --format json. kind selects the shape of data; schema, kind, version and exit carry the same meaning in every version of this format.",
+  "type": "object",
+  "required": [
+    "schema",
+    "kind",
+    "version",
+    "exit",
+    "diagnostics"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema": {
+      "description": "The result format the document declares.",
+      "type": "string",
+      "const": "agentfs/report/v1"
+    },
+    "kind": {
+      "description": "The command whose result this is, which selects the shape of data.",
+      "type": "string",
+      "enum": [
+        "scan",
+        "validate",
+        "doctor",
+        "version",
+        "error"
+      ]
+    },
+    "version": {
+      "description": "The agentfs build that produced the result.",
+      "type": "string"
+    },
+    "root": {
+      "description": "The workspace the result describes, absent when the result describes no workspace.",
+      "type": "string"
+    },
+    "exit": {
+      "description": "The code the process terminates with, carried in the result so a reader of a captured file reaches the verdict the process reached.",
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        70,
+        130
+      ]
+    },
+    "data": {
+      "description": "The payload kind selects, absent for a result that carries none.",
+      "type": "object"
+    },
+    "diagnostics": {
+      "description": "Every finding the command accumulated, an empty array for a run that raised none.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    }
+  },
+  "$defs": {
+    "diagnostic": {
+      "title": "agentfs diagnostic",
+      "description": "One machine-readable finding about one workspace document.",
+      "type": "object",
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "code": {
+          "description": "The finding's permanent identifier, which is what a consumer branches on. A code is retired rather than reused.",
+          "type": "string",
+          "enum": [
+            "AFS1001",
+            "AFS1002",
+            "AFS1003",
+            "AFS1004",
+            "AFS1005",
+            "AFS1006",
+            "AFS1007",
+            "AFS1008",
+            "AFS2001",
+            "AFS2002",
+            "AFS2003",
+            "AFS2004",
+            "AFS2005",
+            "AFS3001",
+            "AFS3002",
+            "AFS3003",
+            "AFS3004",
+            "AFS3005",
+            "AFS3006",
+            "AFS3007",
+            "AFS4001",
+            "AFS4002",
+            "AFS4010",
+            "AFS5009",
+            "AFS5010",
+            "AFS5011",
+            "AFS5012",
+            "AFS5013",
+            "AFS5014",
+            "AFS5015",
+            "AFS5016"
+          ]
+        },
+        "severity": {
+          "description": "How serious the finding is. A document carrying an error is not usable as state.",
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "path": {
+          "description": "The workspace-relative path of the document the finding is about, absent for a finding about the workspace itself.",
+          "type": "string"
+        },
+        "pointer": {
+          "description": "An RFC 6901 pointer to the member the finding is about, absent when the finding is about the document as a whole.",
+          "type": "string",
+          "format": "json-pointer",
+          "maxLength": 200
+        },
+        "line": {
+          "description": "The 1-based line of pointer within the document, absent when the position does not resolve.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "description": "The 1-based column of pointer within the document, absent when the position does not resolve.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "message": {
+          "description": "Prose naming the condition, for a person to read. It carries no contract and is reworded without a schema version.",
+          "type": "string"
+        },
+        "hint": {
+          "description": "Prose naming the edit that resolves the finding. Applying it to the document makes the finding go away.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The offending value prepared for display: a terminal control sequence is replaced by a visible marker, a rune that reorders or hides the text around it is replaced by a visible stand-in, and the text is abbreviated to the ceiling. It does not reproduce the document's bytes.",
+          "type": "string",
+          "maxLength": 120
+        }
+      }
+    }
+  }
+}

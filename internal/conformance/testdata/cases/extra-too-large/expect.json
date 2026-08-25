@@ -1,0 +1,11 @@
+{
+  "codes": [
+    "AFS1003",
+    "AFS1006"
+  ],
+  "pointers": [
+    "/transcript"
+  ],
+  "status": "running",
+  "notes": "Undefined members past the per-document ceiling are dropped rather than retained."
+}

@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS1001"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1001=⎋{\"schema\":\"agentfs/v1\",\"status\":\"running\"}"
+  ],
+  "notes": "Raw escape bytes ahead of an otherwise well-formed object make the document invalid JSON, and the first line the diagnostic quotes back carries none of them."
+}

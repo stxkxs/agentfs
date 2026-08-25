@@ -1,0 +1,5 @@
+{
+  "codes": [],
+  "status": "running",
+  "notes": "A CSI sequence inside a value the contract admits raises nothing, so neutralizing it is the render boundary's job rather than the decoder's."
+}

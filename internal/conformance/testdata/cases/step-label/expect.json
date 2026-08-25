@@ -1,0 +1,6 @@
+{
+  "codes": [],
+  "status": "running",
+  "step": "retrieval",
+  "notes": "A step is a named phase when the task has no fixed sequence."
+}

@@ -1,0 +1,14 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/steps_total"
+  ],
+  "status": "running",
+  "step": 2,
+  "values": [
+    "AFS2001=\"6\""
+  ],
+  "notes": "The steps_total member holds a JSON number, not a quoted one."
+}

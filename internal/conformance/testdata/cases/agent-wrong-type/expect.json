@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/agent"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=42"
+  ],
+  "notes": "The agent member holds a name, not a number."
+}

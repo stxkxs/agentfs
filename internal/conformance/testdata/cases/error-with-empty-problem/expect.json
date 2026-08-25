@@ -1,0 +1,12 @@
+{
+  "codes": [
+    "AFS2002",
+    "AFS3007"
+  ],
+  "pointers": [
+    "/problem",
+    "/status"
+  ],
+  "status": "error",
+  "notes": "An empty problem describes no fault, so a failure declared with one is still undescribed."
+}

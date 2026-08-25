@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3004"
+  ],
+  "pointers": [
+    "/updated_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS3004=08/04/2026 12:59:47"
+  ],
+  "notes": "A locale date format is ambiguous between hosts."
+}

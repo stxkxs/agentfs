@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS3007"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "error",
+  "notes": "JSON permits a repeated member and the decoder reads the last occurrence, so a document whose first status is running is read as error."
+}

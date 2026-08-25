@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS1001"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1001={"
+  ],
+  "notes": "A document observed part-written is not well-formed JSON, which is the failure an atomic write prevents."
+}

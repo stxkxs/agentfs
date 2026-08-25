@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2003"
+  ],
+  "pointers": [
+    "/agent"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2003=indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer-indexer…"
+  ],
+  "notes": "A string member past its ceiling is truncated for display and reported."
+}

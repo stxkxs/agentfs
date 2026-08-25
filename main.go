@@ -1,46 +1,65 @@
+// Command agentfs watches AI agent workspaces on disk.
+//
+// The binary is a thin wrapper: it builds the process environment, runs the
+// command, and exits with the code it returns. Everything worth testing lives
+// below [cli.Run], which takes its environment as a value and never calls
+// os.Exit.
 package main
 
 import (
-	"fmt"
+	"context"
 	"os"
-	"path/filepath"
+	"os/signal"
+	"syscall"
 
-	tea "github.com/charmbracelet/bubbletea"
+	"charm.land/lipgloss/v2"
 
-	"github.com/stxkxs/agentfs/internal/app"
-	"github.com/stxkxs/agentfs/internal/watcher"
+	"github.com/stxkxs/agentfs/internal/cli"
 )
 
-func main() {
-	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "usage: agentfs <directory>\n")
-		os.Exit(1)
-	}
+func main() { os.Exit(run()) }
 
-	root, err := filepath.Abs(os.Args[1])
+// run holds everything that must unwind before the process exits. os.Exit skips
+// deferred functions, so the signal handler is released here rather than in
+// main, where the exit would leave it registered.
+func run() int {
+	// A write to a pipe whose reader is gone raises SIGPIPE, and the Go runtime
+	// answers that by killing the process when the descriptor is standard
+	// output or standard error. The exit-code contract is the opposite: a
+	// reader that closes the pipe has decided it has enough, so the command
+	// keeps the verdict it reached and report.IsBrokenPipe recognizes the
+	// failed write. That rule only runs if the write returns instead of the
+	// process dying, which is what ignoring the signal here buys — for a
+	// descriptor under a signal disposition of ignore, the kernel fails the
+	// write with EPIPE.
+	signal.Ignore(syscall.SIGPIPE)
+
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
+	return int(cli.Run(ctx, cli.Env{
+		Args:           os.Args,
+		Stdout:         os.Stdout,
+		Stderr:         os.Stderr,
+		Getenv:         os.Getenv,
+		Interactive:    isTerminal(os.Stdout),
+		DarkBackground: darkBackground(),
+	}))
+}
+
+// isTerminal reports whether w is a terminal, which decides whether a command
+// with a terminal form uses it.
+func isTerminal(f *os.File) bool {
+	info, err := f.Stat()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return false
 	}
+	return info.Mode()&os.ModeCharDevice != 0
+}
 
-	info, err := os.Stat(root)
-	if err != nil || !info.IsDir() {
-		fmt.Fprintf(os.Stderr, "error: %s is not a directory\n", root)
-		os.Exit(1)
-	}
-
-	w, err := watcher.New(root)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error starting watcher: %v\n", err)
-		os.Exit(1)
-	}
-	defer w.Close()
-
-	model := app.New(root, w)
-	p := tea.NewProgram(model, tea.WithAltScreen())
-
-	if _, err := p.Run(); err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
-	}
+// darkBackground reports the terminal's background so the palette can be
+// chosen. A terminal that answers nothing is treated as dark, which is the
+// common case and the one whose palette degrades more gracefully on the other.
+func darkBackground() bool {
+	return lipgloss.HasDarkBackground(os.Stdin, os.Stdout)
 }

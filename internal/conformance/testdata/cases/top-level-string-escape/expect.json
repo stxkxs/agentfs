@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS1002"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1002=\"\\u001b[2Jrunning\""
+  ],
+  "notes": "A bare JSON string declares no members, and the diagnostic quotes source bytes in which an escape sequence is still its printable JSON spelling."
+}

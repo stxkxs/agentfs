@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/heartbeat_seconds"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=\"15\""
+  ],
+  "notes": "The heartbeat_seconds member holds a JSON number, not a quoted one."
+}

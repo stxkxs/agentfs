@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/updated_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001={�    \"seconds\": 1775651811,�    \"nanos\": 0�  }"
+  ],
+  "notes": "The updated_at member holds an RFC 3339 string, not a structured clock reading."
+}

@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3004"
+  ],
+  "pointers": [
+    "/started_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS3004=2026-04-08T12:40:11�Z"
+  ],
+  "notes": "Invalid UTF-8 inside a string is well-formed JSON to the decoder, so the document is read rather than refused; the bytes inside the timestamp make it unparseable and reach the diagnostic as the replacement rune, while the ones inside task raise nothing."
+}

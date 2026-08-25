@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/run_id"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=7"
+  ],
+  "notes": "The run_id member names a run directory, so it is a string even when the name is a counter."
+}

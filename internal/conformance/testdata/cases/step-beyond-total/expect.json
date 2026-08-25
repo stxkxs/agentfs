@@ -1,0 +1,14 @@
+{
+  "codes": [
+    "AFS3006"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "step": 9,
+  "values": [
+    "AFS3006=9"
+  ],
+  "notes": "A step past steps_total makes the pair inconsistent, and the state still reads."
+}

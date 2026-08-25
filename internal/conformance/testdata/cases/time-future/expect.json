@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3003"
+  ],
+  "pointers": [
+    "/updated_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS3003=2026-04-08T14:30:00Z"
+  ],
+  "notes": "A timestamp beyond the observer's clock and its skew tolerance is reported rather than trusted."
+}

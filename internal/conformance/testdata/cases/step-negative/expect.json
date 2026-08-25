@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2005"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2005=-1"
+  ],
+  "notes": "A negative ordinal names no position."
+}

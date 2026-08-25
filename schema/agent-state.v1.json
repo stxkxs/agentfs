@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stxkxs.github.io/agentfs/schema/agent-state.v1.json",
+  "title": "agentfs agent state",
+  "description": "The document an agent writes to declare what it is doing. agentfs reads one of these per agent workspace directory. Members the contract does not define are preserved and ignored.",
+  "type": "object",
+  "required": [
+    "schema",
+    "status"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema": {
+      "description": "The contract version the document declares.",
+      "type": "string",
+      "enum": [
+        "agentfs/v1"
+      ]
+    },
+    "status": {
+      "description": "The state the agent declares itself to be in.",
+      "type": "string",
+      "enum": [
+        "running",
+        "idle",
+        "blocked",
+        "error",
+        "done"
+      ]
+    },
+    "agent": {
+      "description": "The agent's name. The workspace directory name is used when absent.",
+      "type": "string",
+      "maxLength": 256
+    },
+    "task": {
+      "description": "The work in progress.",
+      "type": "string",
+      "maxLength": 4096
+    },
+    "step": {
+      "description": "The position within the task: a non-negative ordinal or a named phase.",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "steps_total": {
+      "description": "The number of steps the task is expected to take.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "model": {
+      "description": "The model the agent is running against.",
+      "type": "string",
+      "maxLength": 256
+    },
+    "run_id": {
+      "description": "The run directory this document belongs to.",
+      "type": "string",
+      "maxLength": 256
+    },
+    "problem": {
+      "description": "A fault description, independent of status.",
+      "type": "string",
+      "maxLength": 4096,
+      "$comment": "compatibility member names: error"
+    },
+    "heartbeat_seconds": {
+      "description": "How often the agent undertakes to rewrite the document. A document older than this is reported stale.",
+      "type": "number",
+      "minimum": 0
+    },
+    "started_at": {
+      "description": "When the agent began the task, as an RFC 3339 date-time with an offset.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "When the agent last wrote the document, as an RFC 3339 date-time with an offset.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "labels": {
+      "description": "Integrator-defined string metadata.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

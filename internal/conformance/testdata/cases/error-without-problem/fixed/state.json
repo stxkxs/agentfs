@@ -1,0 +1,6 @@
+{
+  "schema": "agentfs/v1",
+  "status": "error",
+  "task": "Compile the generated sources",
+  "problem": "The compiler exited 2 on the third file."
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "agent": 1,
+  "task": 2,
+  "model": []
+}

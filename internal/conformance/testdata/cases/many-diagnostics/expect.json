@@ -1,0 +1,21 @@
+{
+  "codes": [
+    "AFS2002",
+    "AFS2005",
+    "AFS3002",
+    "AFS3005"
+  ],
+  "pointers": [
+    "/agent",
+    "/status",
+    "/step",
+    "/updated_at"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS2005=-1",
+    "AFS3002=workin",
+    "AFS3005=2026-04-08T12:59:47"
+  ],
+  "notes": "A document with four faults yields four findings in one pass."
+}

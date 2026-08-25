@@ -1,0 +1,7 @@
+{
+  "codes": [
+    "AFS1004"
+  ],
+  "status": "running",
+  "notes": "A document that omits the schema member is read under the compatibility profile."
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "agentfs/v1",
+  "status": "done",
+  "task": "Rebuild the index",
+  "problem": "The first two fetches timed out and were retried."
+}

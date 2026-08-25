@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3002"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS3002=unfailed"
+  ],
+  "notes": "A status that contains a fault word does not resolve to error."
+}

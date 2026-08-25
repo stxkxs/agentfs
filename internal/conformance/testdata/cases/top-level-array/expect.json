@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS1002"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1002=["
+  ],
+  "notes": "One document declares one agent's state, so the top level is an object rather than an array."
+}

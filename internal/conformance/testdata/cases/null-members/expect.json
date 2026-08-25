@@ -1,0 +1,5 @@
+{
+  "codes": [],
+  "status": "running",
+  "notes": "A null member declares nothing, so a document that nulls every optional member reads as one that omits them."
+}
