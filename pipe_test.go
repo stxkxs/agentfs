@@ -149,23 +149,3 @@ func stateDocument(agent, step int) string {
 		`"heartbeat_seconds":300,"started_at":%q,"updated_at":%q}`,
 		agent, step%1024+1, agent, at, at)
 }
-
-// buildAgentfs compiles the binary under test. The signal disposition it checks
-// belongs to the built program rather than to any package, so it cannot be
-// reached by calling into one.
-func buildAgentfs(t *testing.T) string {
-	t.Helper()
-	if _, err := exec.LookPath("go"); err != nil {
-		t.Skip("the go tool is not available")
-	}
-
-	ctx, cancel := context.WithTimeout(t.Context(), 2*time.Minute)
-	defer cancel()
-
-	bin := filepath.Join(t.TempDir(), "agentfs")
-	build := exec.CommandContext(ctx, "go", "build", "-o", bin, ".")
-	if out, err := build.CombinedOutput(); err != nil {
-		t.Fatalf("build agentfs: %v\n%s", err, out)
-	}
-	return bin
-}

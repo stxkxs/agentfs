@@ -25,7 +25,7 @@ func classify(dir string) Filesystem {
 	if err := syscall.Statfs(dir, &st); err != nil {
 		return Filesystem{Kind: KindUnknown, Type: "unprobeable"}
 	}
-	switch int64(st.Type) {
+	switch st.Type {
 	case magicEXT:
 		return Filesystem{Kind: KindLocal, Type: "ext"}
 	case magicXFS:

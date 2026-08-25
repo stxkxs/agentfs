@@ -102,7 +102,12 @@ tasks:
           release reports a different set. Install it with:
             go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@{{.LINT_VERSION}}
     cmds:
-      - golangci-lint run ./...
+      # Once per operating system the platform reference claims. A file behind a
+      # build tag is invisible to a run under another GOOS, so a lint pass on
+      # one platform says nothing about the others and the pipeline is the first
+      # thing to read them.
+      - for: [linux, darwin, windows]
+        cmd: GOOS={{.ITEM}} golangci-lint run ./...
 
   fmt:
     desc: Apply the repository's formatters to every Go file.
