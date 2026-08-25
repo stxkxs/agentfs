@@ -1,211 +1,169 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 580" font-family="system-ui, -apple-system, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="system-ui, -apple-system, sans-serif">
   <defs>
     <style>
       .bg { fill: #0D1117; }
       .card { fill: #161B22; stroke: #30363D; stroke-width: 1; rx: 8; }
-      .card-hi { fill: #161B22; stroke: #34D399; stroke-width: 1.5; rx: 8; }
+      .card-green { fill: #161B22; stroke: #34D399; stroke-width: 1.5; rx: 8; }
       .card-blue { fill: #161B22; stroke: #58A6FF; stroke-width: 1.5; rx: 8; }
-      .card-orange { fill: #161B22; stroke: #FFA657; stroke-width: 1.5; rx: 8; }
-      .card-purple { fill: #161B22; stroke: #D2A8FF; stroke-width: 1.5; rx: 8; }
-      .title { fill: #E6EDF3; font-size: 13px; font-weight: 600; }
-      .sub { fill: #8B949E; font-size: 10px; }
-      .label { fill: #34D399; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; }
-      .label-blue { fill: #58A6FF; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; }
-      .label-orange { fill: #FFA657; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; }
-      .label-purple { fill: #D2A8FF; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; }
-      .heading { fill: #E6EDF3; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
-      .dim { fill: #8B949E; font-size: 11px; }
-      .sec { fill: #34D399; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; }
-      .cmd { fill: #8B949E; font-size: 9px; }
-      .dot { fill: #34D399; }
-      .arrow { stroke: #30363D; stroke-width: 1.5; fill: none; }
-      .arrow-hi { stroke: #34D399; stroke-width: 1.5; fill: none; }
-      .mono { font-family: ui-monospace, 'SF Mono', monospace; }
+      .card-amber { fill: #161B22; stroke: #F0B429; stroke-width: 1.5; rx: 8; }
+      .band { fill: #0D1117; stroke: #21262D; stroke-width: 1; rx: 10; }
+      .h1 { fill: #E6EDF3; font-size: 26px; font-weight: 700; }
+      .h2 { fill: #8B949E; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; }
+      .name { fill: #E6EDF3; font-size: 13px; font-weight: 600; }
+      .name-green { fill: #34D399; font-size: 13px; font-weight: 600; }
+      .name-blue { fill: #58A6FF; font-size: 13px; font-weight: 600; }
+      .name-amber { fill: #F0B429; font-size: 13px; font-weight: 600; }
+      .body { fill: #8B949E; font-size: 11px; }
+      .mono { fill: #8B949E; font-size: 11px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .mono-lit { fill: #A5D6FF; font-size: 11px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .arrow { stroke: #484F58; stroke-width: 1.5; fill: none; marker-end: url(#head); }
+      .arrow-green { stroke: #34D399; stroke-width: 1.5; fill: none; marker-end: url(#head-green); }
+      .rule { stroke: #21262D; stroke-width: 1; }
     </style>
+    <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#484F58"/>
+    </marker>
+    <marker id="head-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34D399"/>
+    </marker>
   </defs>
 
-  <rect class="bg" width="1200" height="580"/>
+  <rect class="bg" width="1200" height="900"/>
 
-  <text class="heading" x="40" y="36">agentfs</text>
-  <text class="dim" x="40" y="52">Terminal UI for watching AI agent workspaces in real time</text>
+  <text class="h1" x="40" y="46">agentfs</text>
+  <text class="body" x="40" y="68">A terminal view of what your agents are doing, and the contract they declare it with.</text>
 
-  <!-- ═══ Left: Data Flow ═══ -->
-  <text class="sec" x="40" y="82">DATA FLOW</text>
+  <!-- ── Data flow ─────────────────────────────────────────────────────── -->
+  <text class="h2" x="40" y="112">DATA FLOW</text>
+  <line class="rule" x1="40" y1="122" x2="1160" y2="122"/>
 
-  <!-- Agent sources -->
-  <rect class="card-orange" x="40" y="92" width="150" height="70"/>
-  <text class="label-orange" x="56" y="110">AGENTS</text>
-  <text class="sub" x="56" y="126">LangChain · CrewAI</text>
-  <text class="sub" x="56" y="140">AutoGen · Custom</text>
-  <text class="sub" x="56" y="154">Claude · Bedrock</text>
+  <rect class="card" x="40" y="140" width="220" height="104"/>
+  <text class="name" x="60" y="166">agents</text>
+  <text class="body" x="60" y="188">write state.json, logs,</text>
+  <text class="body" x="60" y="204">memory and artifacts</text>
+  <text class="mono" x="60" y="226">any language · any host</text>
 
-  <!-- Arrow: agents → filesystem -->
-  <line class="arrow" x1="196" y1="127" x2="232" y2="127"/>
-  <polygon points="232,123 240,127 232,131" fill="#30363D"/>
+  <path class="arrow" d="M268,192 L318,192"/>
 
-  <!-- Filesystem layer -->
-  <rect class="card-hi" x="244" y="92" width="168" height="70"/>
-  <text class="label" x="260" y="110">FILESYSTEM</text>
-  <text class="sub" x="260" y="126">S3 Files mount</text>
-  <text class="sub" x="260" y="140">Local directory</text>
-  <text class="sub" x="260" y="154">NFS · EFS · FUSE</text>
+  <rect class="card" x="326" y="140" width="220" height="104"/>
+  <text class="name" x="346" y="166">filesystem</text>
+  <text class="body" x="346" y="188">local directory, NFS, EFS,</text>
+  <text class="body" x="346" y="204">SMB, or a FUSE mount</text>
+  <text class="mono" x="346" y="226">the only interface</text>
 
-  <!-- Arrow: filesystem → agentfs -->
-  <line class="arrow-hi" x1="418" y1="127" x2="454" y2="127"/>
-  <polygon points="454,123 462,127 454,131" fill="#34D399"/>
+  <path class="arrow-green" d="M554,192 L604,192"/>
 
-  <!-- agentfs box -->
-  <rect class="card-blue" x="466" y="92" width="130" height="70"/>
-  <text class="label-blue" x="482" y="110">AGENTFS</text>
-  <text class="sub" x="482" y="126">watch · detect</text>
-  <text class="sub" x="482" y="140">render · search</text>
-  <text class="sub" x="482" y="154">navigate · tail</text>
+  <rect class="card-green" x="612" y="140" width="220" height="104"/>
+  <text class="name-green" x="632" y="166">agentfs</text>
+  <text class="body" x="632" y="188">observe · decode · validate</text>
+  <text class="body" x="632" y="204">render · report</text>
+  <text class="mono" x="632" y="226">read-only, by construction</text>
 
-  <!-- Arrow: agentfs → terminal -->
-  <line class="arrow" x1="602" y1="127" x2="638" y2="127"/>
-  <polygon points="638,123 646,127 638,131" fill="#30363D"/>
+  <path class="arrow" d="M840,192 L890,192"/>
 
-  <!-- Terminal -->
-  <rect class="card" x="650" y="92" width="130" height="70"/>
-  <text class="title" x="666" y="110">Terminal</text>
-  <text class="sub" x="666" y="126">Alt-screen TUI</text>
-  <text class="sub" x="666" y="140">Bubble Tea</text>
-  <text class="sub" x="666" y="154">Lip Gloss</text>
+  <rect class="card-blue" x="898" y="140" width="262" height="104"/>
+  <text class="name-blue" x="918" y="166">a person, or another agent</text>
+  <text class="body" x="918" y="188">alt-screen TUI, or JSON and</text>
+  <text class="body" x="918" y="204">NDJSON with real exit codes</text>
+  <text class="mono" x="918" y="226">watch · scan · validate · doctor</text>
 
-  <!-- ═══ Middle: Internal Architecture ═══ -->
-  <text class="sec" x="40" y="198">INTERNAL ARCHITECTURE</text>
+  <!-- ── Change detection ──────────────────────────────────────────────── -->
+  <text class="h2" x="40" y="298">CHANGE DETECTION — CHOSEN BY WHAT THE FILESYSTEM IS</text>
+  <line class="rule" x1="40" y1="308" x2="1160" y2="308"/>
 
-  <!-- Watcher -->
-  <rect class="card-hi" x="40" y="210" width="170" height="56"/>
-  <text class="title" x="56" y="230">watcher</text>
-  <text class="sub" x="56" y="244">fsnotify · recursive dir watch</text>
-  <text class="sub" x="56" y="258">create · modify · delete events</text>
+  <rect class="card-green" x="40" y="326" width="360" height="150"/>
+  <text class="name-green" x="60" y="352">local filesystem</text>
+  <text class="mono" x="60" y="374">apfs · ext · xfs · btrfs · zfs · tmpfs</text>
+  <text class="body" x="60" y="400">Kernel notification alone.</text>
+  <text class="body" x="60" y="418">Every write passes through this kernel,</text>
+  <text class="body" x="60" y="436">so every write raises an event.</text>
+  <text class="mono-lit" x="60" y="460">--watch=notify</text>
 
-  <!-- Arrow: watcher fans out -->
-  <line class="arrow-hi" x1="216" y1="238" x2="252" y2="218"/>
-  <line class="arrow-hi" x1="216" y1="238" x2="252" y2="238"/>
-  <line class="arrow-hi" x1="216" y1="238" x2="252" y2="258"/>
-  <line class="arrow-hi" x1="216" y1="238" x2="252" y2="298"/>
+  <rect class="card-amber" x="420" y="326" width="360" height="150"/>
+  <text class="name-amber" x="440" y="352">network export or FUSE mount</text>
+  <text class="mono" x="440" y="374">nfs · efs · smb · ceph · s3 mounts</text>
+  <text class="body" x="440" y="400">Notification plus a bounded stat sweep.</text>
+  <text class="body" x="440" y="418">Another client's write reaches the export</text>
+  <text class="body" x="440" y="436">without passing through this kernel.</text>
+  <text class="mono-lit" x="440" y="460">--watch=hybrid</text>
 
-  <!-- Tree -->
-  <rect class="card-blue" x="258" y="202" width="170" height="32"/>
-  <text class="title" x="274" y="218">tree</text>
-  <text class="sub" x="314" y="218">navigable dir tree</text>
+  <rect class="card" x="800" y="326" width="360" height="150"/>
+  <text class="name" x="820" y="352">what the sweep costs</text>
+  <text class="body" x="820" y="378">It re-reads the directories on screen, so</text>
+  <text class="body" x="820" y="396">its cost follows the viewport rather than</text>
+  <text class="body" x="820" y="414">the size of the workspace.</text>
+  <text class="body" x="820" y="438">A change inside a collapsed directory is</text>
+  <text class="body" x="820" y="456">reported when it is opened.</text>
 
-  <!-- Activity -->
-  <rect class="card-blue" x="258" y="240" width="170" height="32"/>
-  <text class="title" x="274" y="256">activity</text>
-  <text class="sub" x="326" y="256">live change feed</text>
+  <!-- ── Internal architecture ─────────────────────────────────────────── -->
+  <text class="h2" x="40" y="530">INTERNAL ARCHITECTURE — DEPENDENCIES POINT INWARD</text>
+  <line class="rule" x1="40" y1="540" x2="1160" y2="540"/>
 
-  <!-- Viewer -->
-  <rect class="card-blue" x="258" y="278" width="170" height="32"/>
-  <text class="title" x="274" y="294">viewer</text>
-  <text class="sub" x="318" y="294">file preview + search</text>
+  <rect class="band" x="40" y="558" width="1120" height="86"/>
+  <text class="h2" x="58" y="580">SURFACE</text>
+  <rect class="card-blue" x="150" y="566" width="180" height="70"/>
+  <text class="name-blue" x="166" y="590">ui/app</text>
+  <text class="body" x="166" y="608">the one tea.Model:</text>
+  <text class="body" x="166" y="624">focus, routing, commands</text>
+  <rect class="card-blue" x="346" y="566" width="180" height="70"/>
+  <text class="name-blue" x="362" y="590">ui/pane</text>
+  <text class="body" x="362" y="608">tree · preview · feed</text>
+  <text class="body" x="362" y="624">runs · agents · status</text>
+  <rect class="card-blue" x="542" y="566" width="228" height="70"/>
+  <text class="name-blue" x="558" y="590">ui/render · layout · theme · keys</text>
+  <text class="body" x="558" y="608">geometry, tokens, bindings,</text>
+  <text class="body" x="558" y="624">and the fit-to-rect boundary</text>
+  <rect class="card-blue" x="786" y="566" width="180" height="70"/>
+  <text class="name-blue" x="802" y="590">cli</text>
+  <text class="body" x="802" y="608">commands, flags,</text>
+  <text class="body" x="802" y="624">exit codes</text>
+  <rect class="card-blue" x="982" y="566" width="162" height="70"/>
+  <text class="name-blue" x="998" y="590">report</text>
+  <text class="body" x="998" y="608">JSON envelope,</text>
+  <text class="body" x="998" y="624">NDJSON stream</text>
 
-  <!-- Agent detection -->
-  <rect class="card-purple" x="258" y="316" width="170" height="32"/>
-  <text class="title" x="274" y="332">agent</text>
-  <text class="sub" x="314" y="332">detect + status + runs</text>
+  <path class="arrow" d="M600,652 L600,676"/>
 
-  <!-- Arrows to app -->
-  <line class="arrow" x1="434" y1="218" x2="470" y2="262"/>
-  <line class="arrow" x1="434" y1="256" x2="470" y2="262"/>
-  <line class="arrow" x1="434" y1="294" x2="470" y2="262"/>
-  <line class="arrow" x1="434" y1="332" x2="470" y2="262"/>
+  <rect class="band" x="40" y="684" width="1120" height="86"/>
+  <text class="h2" x="58" y="706">DOMAIN</text>
+  <rect class="card-green" x="150" y="692" width="228" height="70"/>
+  <text class="name-green" x="166" y="716">agentstate</text>
+  <text class="body" x="166" y="734">the contract: types, vocabulary,</text>
+  <text class="body" x="166" y="750">decoder, published schema</text>
+  <rect class="card" x="394" y="692" width="180" height="70"/>
+  <text class="name" x="410" y="716">workspace</text>
+  <text class="body" x="410" y="734">agents, runs, presence,</text>
+  <text class="body" x="410" y="750">the settle rule</text>
+  <rect class="card" x="590" y="692" width="180" height="70"/>
+  <text class="name" x="606" y="716">index</text>
+  <text class="body" x="606" y="734">lazy tree, bounded</text>
+  <text class="body" x="606" y="750">incremental updates</text>
+  <rect class="card" x="786" y="692" width="180" height="70"/>
+  <text class="name" x="802" y="716">watch</text>
+  <text class="body" x="802" y="734">notify · sweep · hybrid,</text>
+  <text class="body" x="802" y="750">coalescing, statistics</text>
+  <rect class="card" x="982" y="692" width="162" height="70"/>
+  <text class="name" x="998" y="716">fileview</text>
+  <text class="body" x="998" y="734">bounded windows,</text>
+  <text class="body" x="998" y="750">tailing, lexers</text>
 
-  <!-- App model -->
-  <rect class="card-hi" x="476" y="238" width="170" height="50"/>
-  <text class="title" x="492" y="258">app</text>
-  <text class="sub" x="492" y="272">layout · keybinds · routing</text>
-  <text class="sub" x="492" y="282">3-pane + status bar</text>
+  <path class="arrow" d="M600,778 L600,802"/>
 
-  <!-- ═══ Right panel: Workspace Convention ═══ -->
-  <rect class="card" x="800" y="78" width="370" height="278" rx="12"/>
-  <text class="sec" x="820" y="100">WORKSPACE CONVENTION</text>
-
-  <rect x="820" y="110" width="330" height="56" rx="6" fill="#1C2333" stroke="#FFA657" stroke-width="1" opacity="0.8"/>
-  <text class="label-orange" x="836" y="126">AGENT DIRECTORY</text>
-  <text class="sub mono" x="836" y="142">state.json</text>
-  <text class="sub" x="920" y="142">status, task, step, model</text>
-  <text class="sub mono" x="836" y="156">agent.json</text>
-  <text class="sub" x="920" y="156">alternate state file</text>
-
-  <line x1="985" y1="170" x2="985" y2="180" stroke="#30363D" stroke-width="1"/>
-  <polygon points="981,180 989,180 985,186" fill="#30363D"/>
-
-  <rect x="820" y="190" width="330" height="56" rx="6" fill="#1C2333" stroke="#34D399" stroke-width="1" opacity="0.8"/>
-  <text class="label" x="836" y="206">SUBDIRECTORIES</text>
-  <text class="sub mono" x="836" y="222">memory/</text>
-  <text class="sub" x="906" y="222">agent context and facts</text>
-  <text class="sub mono" x="836" y="236">logs/</text>
-  <text class="sub" x="906" y="236">run.log with level coloring</text>
-
-  <line x1="985" y1="250" x2="985" y2="260" stroke="#30363D" stroke-width="1"/>
-  <polygon points="981,260 989,260 985,266" fill="#30363D"/>
-
-  <rect x="820" y="270" width="330" height="56" rx="6" fill="#1C2333" stroke="#D2A8FF" stroke-width="1" opacity="0.8"/>
-  <text class="label-purple" x="836" y="286">RUN HISTORY</text>
-  <text class="sub mono" x="836" y="302">runs/run-001/</text>
-  <text class="sub" x="940" y="302">numbered runs</text>
-  <text class="sub mono" x="836" y="316">runs/20260408_130000/</text>
-  <text class="sub" x="990" y="316">timestamped</text>
-
-  <circle class="dot" cx="812" cy="138" r="3" opacity="0.6"/>
-  <circle class="dot" cx="812" cy="222" r="3" opacity="0.6"/>
-  <circle class="dot" cx="812" cy="298" r="3" opacity="0.6"/>
-
-  <!-- ═══ Bottom: TUI Layout ═══ -->
-  <text class="sec" x="40" y="378">TUI LAYOUT</text>
-
-  <!-- Status bar -->
-  <rect x="40" y="388" width="740" height="28" rx="6" fill="#1C2333" stroke="#34D399" stroke-width="1" opacity="0.8"/>
-  <text class="label" x="56" y="402">AGENT STATUS BAR</text>
-  <text class="sub" x="56" y="412">agent-alpha</text>
-  <circle cx="122" cy="409" r="3" fill="#34D399"/>
-  <text class="sub" x="130" y="412">running</text>
-  <text class="sub" x="188" y="412">│</text>
-  <text class="sub" x="200" y="412">agent-beta</text>
-  <circle cx="260" cy="409" r="3" fill="#8B949E"/>
-  <text class="sub" x="268" y="412">idle</text>
-  <text class="sub" x="300" y="412">│</text>
-  <text class="sub" x="312" y="412">agent-gamma</text>
-  <text class="sub" x="382" y="412" fill="#F85149">✕ error</text>
-
-  <!-- Tree pane -->
-  <rect x="40" y="424" width="220" height="120" rx="6" fill="#1C2333" stroke="#58A6FF" stroke-width="1.5" opacity="0.8"/>
-  <text class="label-blue" x="56" y="442">FILES</text>
-  <text class="sub mono" x="56" y="458">▼ agent-alpha/</text>
-  <text class="sub mono" x="72" y="472">  state.json</text>
-  <text class="sub mono" x="72" y="486">  ▶ logs/</text>
-  <text class="sub mono" x="72" y="500">  ▶ memory/</text>
-  <text class="sub mono" x="72" y="514">  ▶ runs/</text>
-  <text class="sub mono" x="56" y="528">▶ agent-beta/</text>
-
-  <!-- Viewer pane -->
-  <rect x="270" y="424" width="510" height="68" rx="6" fill="#1C2333" stroke="#30363D" stroke-width="1" opacity="0.8"/>
-  <text class="label-blue" x="286" y="442">PREVIEW</text>
-  <text class="sub mono" x="286" y="458"><tspan fill="#8B949E">1</tspan>  <tspan fill="#30363D">{</tspan></text>
-  <text class="sub mono" x="286" y="472"><tspan fill="#8B949E">2</tspan>    <tspan fill="#58A6FF">"status"</tspan>: <tspan fill="#34D399">"running"</tspan>,</text>
-  <text class="sub mono" x="286" y="486"><tspan fill="#8B949E">3</tspan>    <tspan fill="#58A6FF">"task"</tspan>: <tspan fill="#34D399">"research"</tspan></text>
-
-  <!-- Activity pane -->
-  <rect x="270" y="500" width="510" height="44" rx="6" fill="#1C2333" stroke="#30363D" stroke-width="1" opacity="0.8"/>
-  <text class="label-blue" x="286" y="518">ACTIVITY</text>
-  <text class="sub mono" x="286" y="532"><tspan fill="#8B949E">13:04:05</tspan> <tspan fill="#E3B341">~~~</tspan> agent-alpha/state.json</text>
-
-  <!-- Bottom: keybindings -->
-  <rect class="card" x="800" y="388" width="370" height="156" rx="12"/>
-  <text class="sec" x="820" y="410">KEYBINDINGS</text>
-  <text class="sub mono" x="820" y="428">j/k</text><text class="sub" x="870" y="428">navigate</text>
-  <text class="sub mono" x="820" y="442">enter</text><text class="sub" x="870" y="442">open file / expand dir</text>
-  <text class="sub mono" x="820" y="456">/</text><text class="sub" x="870" y="456">search in viewer</text>
-  <text class="sub mono" x="820" y="470">n / N</text><text class="sub" x="870" y="470">next / prev match</text>
-  <text class="sub mono" x="820" y="484">tab</text><text class="sub" x="870" y="484">cycle panes</text>
-  <text class="sub mono" x="820" y="498">R</text><text class="sub" x="870" y="498">toggle run history</text>
-  <text class="sub mono" x="820" y="512">g / G</text><text class="sub" x="870" y="512">top / bottom</text>
-  <text class="sub mono" x="820" y="526">r</text><text class="sub" x="870" y="526">reload</text>
-
-  <!-- Footer -->
-  <text class="dim" x="40" y="564">go install github.com/stxkxs/agentfs@latest</text>
-  <text class="cmd" x="340" y="564">Go · Bubble Tea · Lip Gloss · fsnotify</text>
+  <rect class="band" x="40" y="810" width="1120" height="70"/>
+  <text class="h2" x="58" y="832">SEAMS</text>
+  <rect class="card-green" x="150" y="818" width="228" height="54"/>
+  <text class="name-green" x="166" y="842">fsx</text>
+  <text class="body" x="166" y="860">os.Root — confined, and no write method</text>
+  <rect class="card" x="394" y="818" width="180" height="54"/>
+  <text class="name" x="410" y="842">textx</text>
+  <text class="body" x="410" y="860">sanitize, fit, search</text>
+  <rect class="card" x="590" y="818" width="180" height="54"/>
+  <text class="name" x="606" y="842">diag</text>
+  <text class="body" x="606" y="860">codes, severities, positions</text>
+  <rect class="card" x="786" y="818" width="180" height="54"/>
+  <text class="name" x="802" y="842">config</text>
+  <text class="body" x="802" y="860">every ceiling, one table</text>
+  <rect class="card" x="982" y="818" width="162" height="54"/>
+  <text class="name" x="998" y="842">metrics</text>
+  <text class="body" x="998" y="860">budgets, counters</text>
 </svg>
