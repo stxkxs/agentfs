@@ -1,0 +1,75 @@
+# Statement-coverage floors, enforced by internal/tools/covercheck.
+#
+# The format is a two-level key/value file. A top-level key sits in column
+# zero; a section entry is indented beneath its header. A blank line is
+# ignored, and so is a line whose first non-space character is "#".
+#
+#   module    import path the package keys below are relative to
+#   global    floor the repository total must meet
+#   packages  floor each listed package must meet
+#   recorded  coverage covercheck measured, raised by "task cover -- -ratchet"
+#
+# A floor of 0 gates a package without setting a bar, which puts the gate in
+# place before the code it gates. Raising a floor as a package's tests land is
+# a review decision on a single line rather than a new pipeline, and nothing
+# lowers one automatically. The values under "recorded" are written by
+# "covercheck -ratchet" and are the high-water mark a package may not fall
+# back below; a package listed there that leaves the profile fails the ratchet
+# rather than disappearing from it.
+
+module: github.com/stxkxs/agentfs
+
+global: 92
+
+# A package holding only tests carries no floor: it declares no statement to
+# cover, and a floor on it would fail every run. internal/conformance is one —
+# its corpus and its gates exercise other packages, and the coverage they
+# produce is credited there by -coverpkg.
+packages:
+  internal/agentstate: 95.9
+  internal/buildinfo: 95
+  internal/cli: 91
+  internal/config: 95
+  internal/diag: 92
+  internal/fileview: 95
+  internal/fsx: 79
+  internal/index: 87
+  internal/metrics: 95
+  internal/report: 95
+  internal/textx: 90
+  internal/tools/covercheck: 95
+  internal/tools/docsgen: 83
+  internal/tools/schemagen: 73
+  internal/ui/app: 93
+  internal/ui/keys: 95
+  internal/ui/layout: 95
+  internal/ui/pane: 96.7
+  internal/ui/render: 89
+  internal/ui/theme: 95
+  internal/watch: 91
+  internal/workspace: 88
+
+recorded:
+  .: 0.0
+  internal/agentstate: 98.1
+  internal/buildinfo: 100.0
+  internal/cli: 93.0
+  internal/config: 100.0
+  internal/diag: 94.2
+  internal/fileview: 98.7
+  internal/fsx: 91.9
+  internal/index: 91.8
+  internal/metrics: 100.0
+  internal/report: 98.7
+  internal/textx: 94.6
+  internal/tools/covercheck: 99.7
+  internal/tools/docsgen: 84.8
+  internal/tools/schemagen: 78.3
+  internal/ui/app: 95.0
+  internal/ui/keys: 97.2
+  internal/ui/layout: 100.0
+  internal/ui/pane: 98.7
+  internal/ui/render: 91.0
+  internal/ui/theme: 100.0
+  internal/watch: 93.1
+  internal/workspace: 90.3

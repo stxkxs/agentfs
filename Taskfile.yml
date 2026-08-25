@@ -1,0 +1,177 @@
+version: "3"
+
+vars:
+  BINARY: agentfs
+  MODULE: github.com/stxkxs/agentfs
+  BUILDINFO: "{{.MODULE}}/internal/buildinfo"
+  DIST: dist
+  COVERPROFILE: cover.out
+  COVERCONFIG: coverage.yaml
+  FUZZTIME: 20s
+  # Minimization runs after a target's budget and is unbounded by default, so a
+  # target that finds something late spends longer shrinking it than exploring.
+  FUZZMINIMIZETIME: 10s
+  # One worker per target. Coverage-guided fuzzing saturates every core it is
+  # given, and thirty-odd targets in sequence each taking the whole machine
+  # makes the wall clock of a run depend on what else is running.
+  FUZZWORKERS: 4
+  GENERATED: schema docs/reference
+  VERSION:
+    sh: git describe --tags --always --dirty 2>/dev/null || echo dev
+  COMMIT:
+    sh: git rev-parse --short HEAD 2>/dev/null || echo unknown
+  DATE:
+    sh: date -u +%Y-%m-%dT%H:%M:%SZ
+  LDFLAGS: >-
+    -s -w
+    -X {{.BUILDINFO}}.version={{.VERSION}}
+    -X {{.BUILDINFO}}.commit={{.COMMIT}}
+    -X {{.BUILDINFO}}.buildDate={{.DATE}}
+
+tasks:
+  build:
+    desc: Compile the binary into dist/, stamping version, commit and build date into it.
+    cmds:
+      - go build -trimpath -ldflags "{{.LDFLAGS}}" -o {{.DIST}}/{{.BINARY}} .
+
+  install:
+    desc: Install the binary into GOBIN with the same stamps a dist build carries.
+    cmds:
+      - go install -trimpath -ldflags "{{.LDFLAGS}}" .
+
+  run:
+    desc: Watch a workspace from source, as in "task run -- ./workspace".
+    cmds:
+      - go run . {{.CLI_ARGS}}
+
+  test:
+    desc: Run the tests.
+    cmds:
+      - go test ./...
+
+  test:race:
+    desc: Run the tests under the race detector, in shuffled order.
+    cmds:
+      - go test -race -shuffle=on ./...
+
+  cover:
+    desc: Measure statement coverage and enforce the floors in coverage.yaml.
+    cmds:
+      - go test -covermode=atomic -coverpkg=./... -coverprofile={{.COVERPROFILE}} ./...
+      - >-
+        go run ./internal/tools/covercheck
+        -profile {{.COVERPROFILE}} -config {{.COVERCONFIG}} {{.CLI_ARGS}}
+
+  fuzz:
+    desc: Explore every fuzz target beyond its seed corpus, for a bounded time.
+    cmds:
+      - |
+        set -eu
+        found=0
+        for pkg in $(go list ./...); do
+          for target in $(go test -list '^Fuzz' "$pkg" | grep '^Fuzz' || true); do
+            found=$((found + 1))
+            echo "fuzz $target in $pkg"
+            go test -run '^$' -fuzz "^${target}$" \
+              -fuzztime={{.FUZZTIME}} -fuzzminimizetime={{.FUZZMINIMIZETIME}} \
+              -parallel={{.FUZZWORKERS}} "$pkg"
+          done
+        done
+        if [ "$found" -eq 0 ]; then
+          echo 'the tree declares no fuzz targets' >&2
+          exit 1
+        fi
+
+  lint:
+    desc: Run golangci-lint over every package.
+    preconditions:
+      - sh: command -v golangci-lint
+        msg: golangci-lint is required; see https://golangci-lint.run for install steps
+    cmds:
+      - golangci-lint run ./...
+
+  fmt:
+    desc: Apply the repository's formatters to every Go file.
+    preconditions:
+      - sh: command -v golangci-lint
+        msg: golangci-lint is required; see https://golangci-lint.run for install steps
+    cmds:
+      - golangci-lint fmt ./...
+
+  vet:
+    desc: Run go vet over every package.
+    cmds:
+      - go vet ./...
+
+  tidy:
+    desc: Bring go.mod and go.sum into line with the imports in the tree.
+    cmds:
+      - go mod tidy
+
+  vuln:
+    desc: Report known vulnerabilities reachable from this module.
+    preconditions:
+      - sh: command -v govulncheck
+        msg: govulncheck is required; install it with "go install golang.org/x/vuln/cmd/govulncheck@latest"
+    cmds:
+      - govulncheck ./...
+
+  gen:
+    desc: Regenerate the published schema and the generated reference pages.
+    cmds:
+      - go run ./internal/tools/schemagen
+      - go run ./internal/tools/docsgen
+
+  verify:
+    desc: Check formatting, module hygiene, and that generated files match their generators.
+    cmds:
+      - |
+        set -eu
+        unformatted=$(gofmt -l .)
+        if [ -n "$unformatted" ]; then
+          printf 'gofmt rewrites these files:\n%s\n' "$unformatted" >&2
+          exit 1
+        fi
+      - go mod tidy -diff
+      - go mod verify
+      - task: gen
+      - |
+        set -eu
+        # Modification of a tracked generated file is drift: the generator was
+        # run and produced something other than what is committed. A file git
+        # does not track yet is new rather than drifted, and the generators'
+        # own tests assert that what is on disk is what they produce.
+        drifted=$(git diff --name-only -- {{.GENERATED}})
+        if [ -n "$drifted" ]; then
+          printf 'these generated files differ from their generators:\n%s\n' "$drifted" >&2
+          exit 1
+        fi
+
+  ci:
+    desc: >-
+      Run the whole gate in order — verify, lint, race tests, coverage floors,
+      vulnerabilities.
+    #
+    # Fuzzing is not here. Every target's seed corpus runs as an ordinary test
+    # under "test" and "test:race", so the inputs that once found a defect gate
+    # every commit. Exploration beyond the seeds is a search with a time budget:
+    # its result depends on what else the machine is doing, and a gate whose
+    # verdict moves with load teaches a reader to rerun it rather than read it.
+    # "task fuzz" runs the search, and CI runs it as its own job.
+    cmds:
+      - task: verify
+      - task: lint
+      - task: test:race
+      - task: cover
+      - task: vuln
+
+  clean:
+    desc: Remove build output, the coverage profile, and the cached test results.
+    cmds:
+      - rm -rf {{.DIST}} {{.COVERPROFILE}}
+      - go clean -testcache
+
+  demo:
+    desc: Fill a workspace with simulated agents, as in "task demo -- /tmp/agentfs-workspace".
+    cmds:
+      - bash scripts/demo-agents.sh {{.CLI_ARGS}}

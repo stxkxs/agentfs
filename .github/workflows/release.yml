@@ -1,0 +1,47 @@
+name: release
+
+# A tag is the release. goreleaser builds the matrix in .goreleaser.yaml from
+# the tagged tree and publishes the archives, the checksums and the schema
+# alongside them.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+# A tag is built once. A run in flight is allowed to finish, because cancelling
+# it would leave a release half uploaded.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      # Creating the release and uploading its assets is the only write this
+      # workflow performs.
+      contents: write
+    steps:
+      # goreleaser reads the tag history to build the changelog and to resolve
+      # the version, so the whole history is fetched rather than one commit.
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Build and publish the release
+        uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

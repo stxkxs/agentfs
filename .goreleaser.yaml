@@ -1,0 +1,62 @@
+version: 2
+
+project_name: agentfs
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - id: agentfs
+    main: .
+    binary: agentfs
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    # The same stamps "task build" applies, so a release binary and a local
+    # one report their identity through the same three symbols.
+    ldflags:
+      - -s -w
+      - -X github.com/stxkxs/agentfs/internal/buildinfo.version={{ .Version }}
+      - -X github.com/stxkxs/agentfs/internal/buildinfo.commit={{ .FullCommit }}
+      - -X github.com/stxkxs/agentfs/internal/buildinfo.buildDate={{ .Date }}
+    # Timestamps come from the commit, so rebuilding a tag reproduces the
+    # archive byte for byte.
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: agentfs
+    ids: [agentfs]
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-snapshot"
+
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+release:
+  # The contract is published alongside the binaries: an integrator validates
+  # a workspace document against the schema of the release they run.
+  extra_files:
+    - glob: schema/*.json
