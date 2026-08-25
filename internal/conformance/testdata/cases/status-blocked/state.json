@@ -1,0 +1,6 @@
+{
+  "schema": "agentfs/v1",
+  "status": "blocked",
+  "task": "Apply the migration",
+  "problem": "An approval is required to write to the production namespace."
+}

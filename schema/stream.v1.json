@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stxkxs.github.io/agentfs/schema/stream.v1.json",
+  "title": "agentfs change-stream record",
+  "description": "One line of the NDJSON stream agentfs watch emits under --format ndjson. Each line is a complete JSON object; the stream as a whole is not one. kind selects the shape of data.",
+  "type": "object",
+  "required": [
+    "schema",
+    "kind",
+    "seq",
+    "time"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema": {
+      "description": "The record format the line declares.",
+      "type": "string",
+      "const": "agentfs/stream/v1"
+    },
+    "kind": {
+      "description": "What the record reports, which selects the shape of data.",
+      "type": "string",
+      "enum": [
+        "change",
+        "status",
+        "error"
+      ]
+    },
+    "seq": {
+      "description": "The producer's record ordinal, counting from 1, so a gap names a record the consumer did not receive.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "time": {
+      "description": "The instant the record reports, RFC 3339 with its offset.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "dedup_key": {
+      "description": "The identity of the event the record reports, absent for a record that reports no repeatable event.",
+      "type": "string"
+    },
+    "data": {
+      "description": "The payload kind selects, absent for a record that carries none.",
+      "type": "object"
+    }
+  }
+}

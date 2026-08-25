@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS1002"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1002=\"running\""
+  ],
+  "notes": "A bare JSON value at the top level declares no members."
+}

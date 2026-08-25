@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2005"
+  ],
+  "pointers": [
+    "/steps_total"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2005=-3"
+  ],
+  "notes": "A negative steps_total counts nothing."
+}

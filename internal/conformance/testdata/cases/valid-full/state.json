@@ -1,0 +1,18 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "agent": "indexer",
+  "task": "Index the workspace tree",
+  "step": 3,
+  "steps_total": 8,
+  "model": "claude-opus-4",
+  "run_id": "2026-04-08T12-40-11Z-1f3c",
+  "problem": "The first fetch timed out and was retried.",
+  "heartbeat_seconds": 15,
+  "started_at": "2026-04-08T12:40:11Z",
+  "updated_at": "2026-04-08T12:59:47Z",
+  "labels": {
+    "host": "runner-3",
+    "queue": "batch"
+  }
+}

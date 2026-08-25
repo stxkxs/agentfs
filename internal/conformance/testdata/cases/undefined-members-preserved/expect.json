@@ -1,0 +1,15 @@
+{
+  "codes": [
+    "AFS1003"
+  ],
+  "pointers": [
+    "/ci_url",
+    "/cost_usd"
+  ],
+  "status": "running",
+  "extra": [
+    "ci_url",
+    "cost_usd"
+  ],
+  "notes": "Members the contract does not define are preserved and reported, so a round trip keeps them."
+}

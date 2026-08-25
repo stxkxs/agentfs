@@ -1,0 +1,12 @@
+{
+  "codes": [
+    "AFS2002"
+  ],
+  "pointers": [
+    "/agent",
+    "/run_id",
+    "/task"
+  ],
+  "status": "running",
+  "notes": "An empty string declares less than an absent member, because it claims a value and carries none."
+}

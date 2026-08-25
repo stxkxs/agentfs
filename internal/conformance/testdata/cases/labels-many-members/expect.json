@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS2003"
+  ],
+  "pointers": [
+    "/labels"
+  ],
+  "status": "running",
+  "notes": "A labels object past the member ceiling is truncated to it and reported, because a label annotates a state declaration rather than carrying a collection."
+}

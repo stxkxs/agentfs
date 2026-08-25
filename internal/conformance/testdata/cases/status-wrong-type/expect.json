@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS2001=3"
+  ],
+  "notes": "The status member holds a string, so a number is a type error rather than an ordinal."
+}

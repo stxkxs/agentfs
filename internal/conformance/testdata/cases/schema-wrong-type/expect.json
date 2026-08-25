@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/schema"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=1"
+  ],
+  "notes": "A schema member that is not a string declares no version, so the document is read under the compatibility profile."
+}

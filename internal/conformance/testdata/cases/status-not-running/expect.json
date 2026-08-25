@@ -1,0 +1,14 @@
+{
+  "codes": [
+    "AFS1004",
+    "AFS3002"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS3002=not running"
+  ],
+  "notes": "Matching is exact, so a status that contains a vocabulary word does not resolve to it."
+}

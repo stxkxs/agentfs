@@ -1,0 +1,8 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "labels": {
+    "host": "runner-3",
+    "retries": 3
+  }
+}

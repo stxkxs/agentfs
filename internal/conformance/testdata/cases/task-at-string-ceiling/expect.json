@@ -1,0 +1,5 @@
+{
+  "codes": [],
+  "status": "running",
+  "notes": "A task holding exactly the ceiling's number of runes, each two bytes wide, raises nothing, so the ceiling counts runes rather than bytes."
+}

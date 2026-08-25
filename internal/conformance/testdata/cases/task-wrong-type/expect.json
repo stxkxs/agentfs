@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/task"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=[�    \"fetch\",�    \"index\"�  ]"
+  ],
+  "notes": "The task member holds one sentence of prose, not a list of steps."
+}

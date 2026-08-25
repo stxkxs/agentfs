@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2004"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2004={�    \"index\": 3,�    \"of\": 8�  }"
+  ],
+  "notes": "The step union admits an ordinal or a label, so an object holding both is refused."
+}

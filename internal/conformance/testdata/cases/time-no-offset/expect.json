@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3005"
+  ],
+  "pointers": [
+    "/updated_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS3005=2026-04-08T12:59:47"
+  ],
+  "notes": "A local date-time without an offset names no instant to a reader on another host."
+}

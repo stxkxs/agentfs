@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2005"
+  ],
+  "pointers": [
+    "/heartbeat_seconds"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2005=-15"
+  ],
+  "notes": "A negative heartbeat names no interval."
+}

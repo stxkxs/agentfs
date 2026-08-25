@@ -1,0 +1,11 @@
+{
+  "document": "status.json",
+  "codes": [
+    "AFS1007"
+  ],
+  "status": "running",
+  "values": [
+    "AFS1007=status.json"
+  ],
+  "notes": "A document named status.json is read, and its filename reported."
+}

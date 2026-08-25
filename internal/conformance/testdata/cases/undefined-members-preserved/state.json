@@ -1,0 +1,6 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "ci_url": "https://ci.example/run/9",
+  "cost_usd": 0.42
+}

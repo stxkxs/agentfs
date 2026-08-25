@@ -1,0 +1,5 @@
+{
+  "codes": [],
+  "status": "error",
+  "notes": "A problem made only of an OSC 52 sequence satisfies the check that an error status names a problem, and renders as nothing."
+}

@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2004"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2004=9223372036854775808"
+  ],
+  "notes": "A step ordinal past the range of a signed 64-bit integer is neither form the union admits, and is refused rather than wrapped."
+}

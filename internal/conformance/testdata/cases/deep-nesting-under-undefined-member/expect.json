@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS1003"
+  ],
+  "pointers": [
+    "/payload"
+  ],
+  "status": "running",
+  "extra": [
+    "payload"
+  ],
+  "notes": "An undefined member holding hundreds of levels of nested arrays is preserved whole, because the preservation ceiling counts bytes rather than depth."
+}

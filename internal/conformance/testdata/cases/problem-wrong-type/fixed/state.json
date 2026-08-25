@@ -1,0 +1,5 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "problem": "The tool exited 137 on the first attempt and was retried."
+}

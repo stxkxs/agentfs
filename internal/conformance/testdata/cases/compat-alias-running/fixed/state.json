@@ -1,0 +1,6 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "agent": "packer",
+  "task": "Assemble the release archive"
+}

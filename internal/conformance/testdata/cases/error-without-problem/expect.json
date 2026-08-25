@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS3007"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "error",
+  "notes": "A failure with no description leaves a reader nothing to act on, and the state still reads."
+}

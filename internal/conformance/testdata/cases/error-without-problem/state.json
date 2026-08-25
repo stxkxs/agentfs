@@ -1,0 +1,5 @@
+{
+  "schema": "agentfs/v1",
+  "status": "error",
+  "task": "Compile the generated sources"
+}

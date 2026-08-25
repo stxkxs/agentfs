@@ -1,0 +1,5 @@
+{
+  "codes": [],
+  "status": "done",
+  "notes": "Status is independent of problem: work that completed after a recovered fault declares done and a problem."
+}

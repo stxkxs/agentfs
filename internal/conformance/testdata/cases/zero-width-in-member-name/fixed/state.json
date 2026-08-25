@@ -1,0 +1,7 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "labels": {
+    "cost_usd": "0.42"
+  }
+}

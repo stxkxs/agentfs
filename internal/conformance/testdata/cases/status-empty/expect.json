@@ -1,0 +1,11 @@
+{
+  "codes": [
+    "AFS2002",
+    "AFS3002"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "notes": "An empty status is both an empty string and a value outside the vocabulary."
+}

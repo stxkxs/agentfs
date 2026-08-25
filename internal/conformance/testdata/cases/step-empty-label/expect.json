@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS2002"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "notes": "An empty step label names no phase."
+}

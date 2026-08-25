@@ -1,0 +1,15 @@
+# Every text file is stored and checked out with LF endings, whatever the
+# platform, so a golden file compares equal on all of them.
+* text=auto eol=lf
+
+# Generated files. They are excluded from the repository's language
+# statistics and collapsed by default in a review; "task gen" is what edits
+# them.
+docs/reference/*.md linguist-generated=true
+schema/*.json linguist-generated=true
+
+# Binary content carries no line endings to normalize.
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

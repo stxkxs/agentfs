@@ -1,0 +1,12 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "agent": null,
+  "task": null,
+  "step": null,
+  "steps_total": null,
+  "heartbeat_seconds": null,
+  "started_at": null,
+  "updated_at": null,
+  "labels": null
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "task": "Rebuild the index",
+  "step": 2,
+  "steps_total": 6
+}

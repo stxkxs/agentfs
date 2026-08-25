@@ -1,0 +1,12 @@
+{
+  "codes": [
+    "AFS1003",
+    "AFS3007"
+  ],
+  "pointers": [
+    "/error",
+    "/status"
+  ],
+  "status": "error",
+  "notes": "A versioned document carries problem, so a member named error describes nothing and the failure reads as undescribed."
+}

@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3002"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS3002=run�ning"
+  ],
+  "notes": "An unpaired surrogate escape is folded to the replacement rune before the status is matched, so the vocabulary check refuses a value the document does not spell."
+}

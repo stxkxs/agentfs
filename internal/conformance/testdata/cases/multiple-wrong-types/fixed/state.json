@@ -1,0 +1,7 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "agent": "indexer",
+  "task": "Index the workspace tree",
+  "model": "claude-opus-4"
+}

@@ -1,0 +1,12 @@
+{
+  "document": "agent.json",
+  "codes": [
+    "AFS1004",
+    "AFS1007"
+  ],
+  "status": "idle",
+  "values": [
+    "AFS1007=agent.json"
+  ],
+  "notes": "A compatibility filename and an absent schema member are separate findings."
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "agentfs/v1",
+  "status": "running",
+  "agent": "indexer",
+  "task": "Rename report.png to something safe",
+  "updated_at": "2026-04-08T12:59:47Z"
+}

@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2004"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2004=1.5"
+  ],
+  "notes": "An ordinal counts whole steps."
+}

@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3002"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS3002=thinking"
+  ],
+  "notes": "A status outside the vocabulary is refused rather than mapped to the nearest member."
+}

@@ -1,1 +1,10 @@
-agentfs
+# The binary a source build produces, and the directory a release build fills.
+/agentfs
+/dist/
+
+# Coverage output. The floors live in coverage.yaml, which is tracked.
+/cover.out
+/coverage.html
+
+# Python bytecode from running the reference writer.
+__pycache__/

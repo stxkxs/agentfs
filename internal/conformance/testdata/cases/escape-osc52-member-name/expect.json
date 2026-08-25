@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS1003"
+  ],
+  "pointers": [
+    "/⎋note"
+  ],
+  "status": "running",
+  "extra": [
+    "\u001b]52;c;cGF5bG9hZA==\u0007note"
+  ],
+  "notes": "A member name carrying an OSC 52 clipboard write is reported under a pointer the sequence has been removed from, and the name is preserved with the sequence intact."
+}

@@ -1,0 +1,5 @@
+{
+  // the agent's state
+  "schema": "agentfs/v1",
+  "status": "running"
+}

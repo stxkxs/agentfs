@@ -1,0 +1,10 @@
+{
+  "codes": [
+    "AFS1001"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS1001=   "
+  ],
+  "notes": "A document holding only whitespace is not well-formed JSON, which is what a file left behind by an interrupted write looks like."
+}

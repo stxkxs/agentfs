@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/labels"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001={�    \"host\": \"runner-3\",�    \"retries\": 3�  }"
+  ],
+  "notes": "Every label value is a string, so one number leaves the whole member undecodable."
+}

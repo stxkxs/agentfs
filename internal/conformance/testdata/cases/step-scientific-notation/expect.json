@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2004"
+  ],
+  "pointers": [
+    "/step"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2004=3e2"
+  ],
+  "notes": "A step written in scientific notation is refused, so a document a JSON Schema validator reads as an integer is one agentfs does not."
+}

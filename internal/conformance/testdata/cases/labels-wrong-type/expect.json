@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/labels"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=\"host=runner-3\""
+  ],
+  "notes": "The labels member holds an object, not an encoded string."
+}

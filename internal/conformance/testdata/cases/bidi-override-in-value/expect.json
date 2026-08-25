@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3004"
+  ],
+  "pointers": [
+    "/updated_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS3004=2026-04-08T12:59:47Z░"
+  ],
+  "notes": "A right-to-left override in agent and in task raises nothing, because a value the contract admits is neutralized at the render boundary rather than by the decoder; the Arabic letter mark inside the timestamp makes it unparseable, and the diagnostic quotes it back with the control replaced by a visible marker."
+}

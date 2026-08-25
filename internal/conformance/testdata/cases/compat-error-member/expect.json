@@ -1,0 +1,11 @@
+{
+  "codes": [
+    "AFS1003",
+    "AFS1004"
+  ],
+  "pointers": [
+    "/error"
+  ],
+  "status": "error",
+  "notes": "Under the compatibility profile the member error is read as problem."
+}

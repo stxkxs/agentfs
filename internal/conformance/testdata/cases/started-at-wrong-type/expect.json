@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/started_at"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001=1775651811"
+  ],
+  "notes": "A timestamp is an RFC 3339 string, not an epoch number."
+}

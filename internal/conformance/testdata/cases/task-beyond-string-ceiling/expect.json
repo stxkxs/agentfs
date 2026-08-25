@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2003"
+  ],
+  "pointers": [
+    "/task"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2003=⎋éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé…"
+  ],
+  "notes": "A task whose body is exactly the ceiling's number of runes and which opens with an OSC 52 sequence is over the ceiling, and the sequence is removed from the quoted value before the value is abbreviated, so the abbreviation spends none of its runes on it."
+}

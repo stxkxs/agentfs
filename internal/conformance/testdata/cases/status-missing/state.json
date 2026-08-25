@@ -1,0 +1,5 @@
+{
+  "schema": "agentfs/v1",
+  "agent": "indexer",
+  "task": "Index the workspace tree"
+}

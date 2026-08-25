@@ -1,0 +1,174 @@
+version: "2"
+
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  default: none
+  # depguard's network denial below applies to non-test files. A test file may
+  # import net/http or database/sql, and noctx also covers os/exec, which the
+  # tests use to drive the built binary — so bodyclose, noctx and rowserrcheck
+  # are enforced over the surface the deny list leaves reachable.
+  # goconst is not enabled. It reports a literal repeated three times as a
+  # constant waiting to be named, which inverts how this repository is built:
+  # the declaration tables are the source of truth and their cells are the
+  # declaration. `wire` in internal/agentstate/status.go spells each status
+  # beside the constant it names, three format lexers each spell their own
+  # keywords, a palette names a colour once per role, and a settings table
+  # names the command each row applies to. Naming those cells moves the answer
+  # away from the table a reader came to read.
+  enable:
+    - bodyclose
+    - depguard
+    - contextcheck
+    - copyloopvar
+    - durationcheck
+    - errcheck
+    - errname
+    - errorlint
+    - exhaustive
+    - forbidigo
+    - gocritic
+    - gocyclo
+    - gosec
+    - govet
+    - ineffassign
+    - makezero
+    - misspell
+    - nakedret
+    - nilerr
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - revive
+    - rowserrcheck
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - wastedassign
+    - whitespace
+
+  settings:
+    depguard:
+      rules:
+        no-network:
+          # agentfs reads a directory and writes to a terminal. It opens no
+          # socket, so the absence of one is enforced here rather than left as
+          # something true today. The threat model states it as a property.
+          files: ["!$test"]
+          deny:
+            - pkg: net
+              desc: agentfs makes no network call; the workspace is its only input
+            - pkg: net/http
+              desc: agentfs makes no network call; the workspace is its only input
+            - pkg: net/url
+              desc: agentfs resolves no URL; a path is not a location
+        no-write-outside-the-seam:
+          # The read-only property is structural: the filesystem seam declares
+          # no method that writes. A subprocess is a write the seam cannot see,
+          # so the package that starts one is denied here; the direct calls are
+          # denied by the forbidigo patterns below.
+          #
+          # The generators under internal/tools are the only code permitted to
+          # create a file, and they write into the repository rather than into
+          # an observed workspace. Every other file the binary is compiled from,
+          # main.go included, is covered.
+          files:
+            - "!**/internal/tools/**"
+            - "!$test"
+          deny:
+            - pkg: os/exec
+              desc: agentfs runs no subprocess
+
+    errcheck:
+      check-type-assertions: true
+      # `_ = f()` stays available as the way to state that an error was
+      # considered and discarded. Flagging it too would leave no way to say so
+      # except a suppression comment, which is harder to read and easier to
+      # apply by reflex.
+      check-blank: false
+    exhaustive:
+      default-signifies-exhaustive: true
+    forbidigo:
+      forbid:
+        - pattern: ^fmt\.Print.*$
+          msg: write to an explicit io.Writer so the call site is testable
+        - pattern: ^print(ln)?$
+          msg: use the logging or rendering path, not builtin print
+        # The seam in fsx declares no write, so no code above it can modify a
+        # workspace. os reaches the filesystem without passing the seam, so
+        # every one of its mutating calls is denied outside the generators,
+        # which write into the repository rather than into a workspace.
+        - pattern: ^os\.(Create|CreateTemp|OpenFile|Truncate|WriteFile)$
+          msg: agentfs creates no file; read through the fsx seam
+        - pattern: ^os\.(Link|Mkdir|MkdirAll|MkdirTemp|Symlink)$
+          msg: agentfs creates no directory or link; read through the fsx seam
+        - pattern: ^os\.(Remove|RemoveAll|Rename)$
+          msg: agentfs removes and renames nothing; read through the fsx seam
+        - pattern: ^os\.(Chmod|Chown|Chtimes)$
+          msg: agentfs changes no file's metadata; read through the fsx seam
+    gocyclo:
+      min-complexity: 15
+    gocritic:
+      enabled-tags: [diagnostic, style, performance, opinionated]
+      disabled-checks: [whyNoLint]
+      settings:
+        # Rendering values — a palette, a glyph set, a frame — are passed by
+        # value on purpose: a renderer that cannot mutate its inputs is one a
+        # test can call in any order. The thresholds are raised above those
+        # types rather than silenced at each call site.
+        hugeParam:
+          sizeThreshold: 512
+        rangeValCopy:
+          sizeThreshold: 512
+    gosec:
+      excludes:
+        - G304
+    govet:
+      enable-all: true
+      disable: [fieldalignment]
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+      allow-unused: false
+    revive:
+      rules:
+        - name: exported
+        - name: package-comments
+        - name: var-naming
+        - name: indent-error-flow
+        - name: errorf
+        - name: context-as-argument
+        - name: range-val-address
+        - name: unreachable-code
+        - name: waitgroup-by-value
+    staticcheck:
+      checks: ["all"]
+
+  exclusions:
+    generated: lax
+    rules:
+      - path: _test\.go$
+        linters: [gosec, gocyclo, unparam, forbidigo]
+      # The generators under internal/tools write the schema and the reference
+      # pages into the repository. They are not linked into the binary, so
+      # their writes are outside the property the pattern states.
+      - path: ^internal/tools/
+        linters: [forbidigo]
+        text: read through the fsx seam
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes: [github.com/stxkxs/agentfs]
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

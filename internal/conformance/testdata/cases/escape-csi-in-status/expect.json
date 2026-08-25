@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS3002"
+  ],
+  "pointers": [
+    "/status"
+  ],
+  "status": "unknown",
+  "values": [
+    "AFS3002=⎋running"
+  ],
+  "notes": "A status prefixed with a CSI sequence matches no vocabulary member, and the sequence is quoted back as printable text rather than as bytes a terminal acts on."
+}

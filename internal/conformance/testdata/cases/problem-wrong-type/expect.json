@@ -1,0 +1,13 @@
+{
+  "codes": [
+    "AFS2001"
+  ],
+  "pointers": [
+    "/problem"
+  ],
+  "status": "running",
+  "values": [
+    "AFS2001={�    \"code\": 137,�    \"retried\": true�  }"
+  ],
+  "notes": "The problem member holds one sentence of prose, not a structured fault object."
+}
