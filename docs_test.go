@@ -2,6 +2,11 @@ package main_test
 
 import (
 	"context"
+	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -229,23 +234,59 @@ func read(t *testing.T, path string) string {
 	return string(b)
 }
 
+// declaredTests returns the name of every test and fuzz target the tree
+// declares.
+//
+// The names are read from the source rather than from `go test -list`, which
+// compiles a test binary per package to answer. Compiling is both far slower
+// than the question deserves and answerable only for the platform doing the
+// asking, so a control asserted by a test behind a build tag would read as
+// missing everywhere else.
+func declaredTests(t *testing.T) map[string]bool {
+	t.Helper()
+
+	known := make(map[string]bool)
+	err := filepath.WalkDir(".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			if d.Name() == ".git" {
+				return fs.SkipDir
+			}
+			return nil
+		}
+		if !strings.HasSuffix(path, "_test.go") {
+			return nil
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), path, nil, parser.SkipObjectResolution)
+		if err != nil {
+			return fmt.Errorf("parse %s: %w", path, err)
+		}
+		for _, decl := range file.Decls {
+			fn, ok := decl.(*ast.FuncDecl)
+			if !ok || fn.Recv != nil {
+				continue
+			}
+			if name := fn.Name.Name; strings.HasPrefix(name, "Test") || strings.HasPrefix(name, "Fuzz") {
+				known[name] = true
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("read the declared tests: %v", err)
+	}
+	return known
+}
+
 // A threat model names a control and the test that checks it. A named test that
 // does not exist turns the control into an assertion, which is the failure the
 // document exists to avoid.
 func TestThreatModelNamesTestsThatExist(t *testing.T) {
 	t.Parallel()
 
-	ctx, cancel := context.WithTimeout(t.Context(), time.Minute)
-	defer cancel()
-
-	out, err := exec.CommandContext(ctx, "go", "test", "-list", ".*", "./...").Output()
-	if err != nil {
-		t.Fatalf("list tests: %v", err)
-	}
-	known := make(map[string]bool)
-	for _, line := range strings.Split(string(out), "\n") {
-		known[strings.TrimSpace(line)] = true
-	}
+	known := declaredTests(t)
 
 	named := regexp.MustCompile("`((?:Test|Fuzz)[A-Za-z0-9_]+)`")
 	matches := named.FindAllStringSubmatch(read(t, "docs/threat-model.md"), -1)
