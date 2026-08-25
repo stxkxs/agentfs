@@ -108,9 +108,20 @@ func isSafeToDraw(r rune) bool {
 	case r == utf8.RuneError:
 		// Indistinguishable from the replacement Sanitize substitutes.
 		return false
+	case holdsItsClusterOpen(r):
+		return false
 	default:
 		return true
 	}
+}
+
+// holdsItsClusterOpen reports a rune that takes the character behind it into
+// its own grapheme cluster, so a pane ending in one takes a cell from the pane
+// beside it. The oracle measures the property rather than reading the set the
+// implementation built from it, so the two agree only when both are right.
+func holdsItsClusterOpen(r rune) bool {
+	s := string(r)
+	return textx.Width(s) > 0 && textx.Width(s+" ") == textx.Width(s)
 }
 
 // FuzzSanitize asserts the properties every render path depends on: the result

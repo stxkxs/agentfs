@@ -72,9 +72,25 @@ tasks:
           for target in $(go test -list '^Fuzz' "$pkg" | grep '^Fuzz' || true); do
             found=$((found + 1))
             echo "fuzz $target in $pkg"
-            go test -run '^$' -fuzz "^${target}$" \
-              -fuzztime={{.FUZZTIME}} -fuzzminimizetime={{.FUZZMINIMIZETIME}} \
-              -parallel={{.FUZZWORKERS}} "$pkg"
+            # A crash and a deadline both exit non-zero, and only one is a
+            # finding. The engine writes the input that crashed and says so; a
+            # run whose budget expires while it is still admitting new coverage
+            # reports the expiry and writes nothing, which describes the budget
+            # rather than the code under test. The corpus a target carries is
+            # what gates every build, so a target is never skipped — only the
+            # expiry is tolerated, and it is reported.
+            if ! out=$(go test -run '^$' -fuzz "^${target}$" \
+                -fuzztime={{.FUZZTIME}} -fuzzminimizetime={{.FUZZMINIMIZETIME}} \
+                -parallel={{.FUZZWORKERS}} "$pkg" 2>&1); then
+              printf '%s\n' "$out"
+              if printf '%s' "$out" | grep -q 'Failing input written to'; then
+                exit 1
+              fi
+              if ! printf '%s' "$out" | grep -q 'context deadline exceeded'; then
+                exit 1
+              fi
+              echo "$target: the budget of {{.FUZZTIME}} expired while coverage was still growing"
+            fi
           done
         done
         if [ "$found" -eq 0 ]; then
