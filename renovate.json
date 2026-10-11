@@ -23,6 +23,7 @@
   ],
   "configMigration": true,
   "dependencyDashboard": true,
+  "dependencyDashboardApproval": false,
   "lockFileMaintenance": {
     "enabled": false
   },

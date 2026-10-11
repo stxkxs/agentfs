@@ -51,7 +51,7 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
         with:
-          version: v2.13.1
+          version: v2.14.0
 
   test:
     name: test (${{ matrix.os }})
@@ -149,7 +149,7 @@ jobs:
       # finding, so an unpinned one makes the job report a different thing on
       # a day nobody changed anything, and fetches an unreviewed build to do it.
       - name: Install govulncheck
-        run: go install golang.org/x/vuln/cmd/govulncheck@v1.7.0
+        run: go install golang.org/x/vuln/cmd/govulncheck@v1.8.0
       - name: Report known vulnerabilities
         run: govulncheck ./...
 

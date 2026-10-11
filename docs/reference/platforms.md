@@ -4,7 +4,7 @@
 
 What continuous integration actually does on each target. A column says yes only where a job checks it, so a property that is merely expected to hold reads as no.
 
-Building agentfs needs Go 1.26.7 or later.
+Building agentfs needs Go 1.26.9 or later.
 
 | Target | Builds | Suite runs | Race detector | Confinement asserted |
 | --- | --- | --- | --- | --- |

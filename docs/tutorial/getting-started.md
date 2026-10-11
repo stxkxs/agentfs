@@ -2,7 +2,7 @@
 
 Build agentfs, create a workspace by hand, and watch it change. About five minutes.
 
-You need Go 1.26.7 or later. Nothing else.
+You need Go 1.26.9 or later. Nothing else.
 
 ## 1. Build it
 

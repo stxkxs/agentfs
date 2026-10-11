@@ -106,7 +106,7 @@ tasks:
       # different question and a clean tree still fails review. The precondition
       # holds them together rather than leaving the difference to be discovered
       # in a pull request.
-      LINT_VERSION: v2.13.1
+      LINT_VERSION: v2.14.0
     preconditions:
       - sh: command -v golangci-lint
         msg: golangci-lint is required; see https://golangci-lint.run for install steps
@@ -147,7 +147,7 @@ tasks:
     desc: Report known vulnerabilities reachable from this module.
     preconditions:
       - sh: command -v govulncheck
-        msg: govulncheck is required; install it with "go install golang.org/x/vuln/cmd/govulncheck@v1.7.0"
+        msg: govulncheck is required; install it with "go install golang.org/x/vuln/cmd/govulncheck@v1.8.0"
     cmds:
       - govulncheck ./...
 
