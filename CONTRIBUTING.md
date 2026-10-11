@@ -13,8 +13,8 @@ how that is arranged.
 | --- | --- | --- |
 | Go | everything | 1.26 or later, matching the `go` directive in `go.mod` |
 | [Task](https://taskfile.dev) | every phase below | 3.x |
-| [golangci-lint](https://golangci-lint.run) | `task lint`, `task fmt` | v2.13.1, the version the gate runs |
-| [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck) | `task vuln` | v1.7.0, the version the gate runs |
+| [golangci-lint](https://golangci-lint.run) | `task lint`, `task fmt` | v2.14.0, the version the gate runs |
+| [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck) | `task vuln` | v1.8.0, the version the gate runs |
 
 `task --list` prints every task with what it does. Nothing in the repository needs a dependency
 outside `go.mod`; do not add one.

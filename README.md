@@ -23,7 +23,7 @@ Built with Go, [Bubble Tea](https://github.com/charmbracelet/bubbletea) and
 go install github.com/stxkxs/agentfs@latest
 ```
 
-Or from source, which requires Go 1.26.7 or later:
+Or from source, which requires Go 1.26.9 or later:
 
 ```sh
 git clone https://github.com/stxkxs/agentfs.git
