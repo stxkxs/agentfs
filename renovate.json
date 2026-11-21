@@ -22,7 +22,9 @@
     "gomodTidy"
   ],
   "configMigration": true,
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "dependencyDashboardApproval": false,
   "lockFileMaintenance": {
     "enabled": false
